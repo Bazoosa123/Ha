@@ -1,5 +1,5 @@
 gg.alert("hallo this is sneak preview")
-
+os
 version_name = "1.43.1.107272" 
 version_code = 1048000
 
