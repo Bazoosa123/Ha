@@ -4,120 +4,8 @@ version_name = "1.43.1.107272"
 version_code = 1048000
 
 function show() if not gg.isVisible()then gg.setVisible(true) end end
-function hide()if gg.isVisible()then gg.setVisible(true) end end 
-function new_search(text, flag, encrypted, sign, memoryFrom, memoryTo, limit)if flag == nil then flag = gg.TYPE_AUTO end if encrypted == nil then  encrypted = false end if sign == nil then sign = gg.SIGN_EQUAL end if memoryFrom == nil  then memoryFrom = 0 end if memoryTo == nil then memoryTo = -1 end if limit == nil then limit = 0 end hide()gg.clearResults() gg.searchNumber(text, flag, encrypted, sign, memoryFrom, memoryTo, limit) end
-function get_results(maxCount, skip, addressMin, addressMax, valueMin, valueMax, flag, fractional, pointer)if skip == nil then skip = 0 end local results, count_results = gg.getResults(maxCount, skip, addressMin, addressMax, valueMin, valueMax, flag, fractional, pointer),gg.getResultsCount() return results, count_results end 
-
-function findItemsParentPointer() 
-if not count_items_parent_pointer then   
-local count_items_parent_pointer = 55
-local results, count_results 
-if informations.x64 then
-local items_root_pointer_constant = "-2999674699455132672"
-local items_root_pointer_position = 4
- new_search(items_root_pointer_constant, gg.TYPE_QWORD)
- results, count_results = get_results(1, items_root_pointer_position - 1) 
-if count_results >= items_root_pointer_position 
-then
- new_search(results[1].address,  gg.TYPE_QWORD) results, count_results = get_results(count_items_parent_pointer) 
-if count_results == count_items_parent_pointer 
-then parent_pointers.items = results 
-else gg.alert("Error: Items parent pointer was not found", "OK") 
-os.exit() 
-end 
-else gg.alert("Error: Items root pointer was not found", "OK") 
-os.exit()
-end
-else 
-local items_root_pointer_constant =" -2220275583104843760"
-local  items_root_pointer_position = 37
-new_search(items_root_pointer_constant, gg.TYPE_QWORD) results, count_results = get_results(1, items_root_pointer_position - 1)
-if count_results >= items_root_pointer_position
- then new_search(results[1].address, gg.TYPE_DWORD) 
-results, count_results = get_results(count_items_parent_pointer) 
- if count_results == count_items_parent_pointer 
- then parent_pointers.items = results
- else gg.alert("Error: Items parent pointer was not found", "OK") 
- os.exit()
-end
-else gg.alert("Error: Items root pointer was not found", "OK")
-os.exit()
-end 
-end 
-end 
-end 
-
- function verify() if informations then local origin_package, cloning_package, origin_package_length = "com.ea.game.simcitymobile_row", "com.ea.game.simcitymobile_ro", string.len(informations.cmdLine) if informations.cmdLine == origin_package then if informations.versionCode == version_code then return USE_ORIGIN_VERSION
- elseif informations.versionCode > version_code then 
-return USE_HIGHER_VERSION else return USE_UNAUTHORIZED_VERSION 
-end 
-elseif string.find(informations.cmdLine, cloning_package) 
-and
- origin_package_length == 29 
-then return USE_CLONING_VERSION else 
-return USE_UNAUTHORIZED_PACKAGE 
-end
-else 
-return USE_NO_PROCCESS 
-end 
-end 
- 
-function min()
-parent_pointers = {} 
-production_times_pointer = {} 
-war_card_pointer = {} 
-common_items_pointer = {}
-omega_part_pointer = {}
-golden_ticket_pointer = {} 
-war_booster_pointer = {} 
-war_part_pointer = {} 
-expansion_certificates_pointer = {} 
-building_items_pointer = {}
-rare_items_pointer = {}
-speed_pointer = {}
-pointers = {}
-POPULATION_items_pointer ={}
-
-informations = gg.getTargetInfo() USE_ORIGIN_VERSION = 200 USE_HIGHER_VERSION = 203 USE_UNAUTHORIZED_VERSION = 70 USE_CLONING_VERSION = 50 USE_UNAUTHORIZED_PACKAGE = 400 USE_NO_PROCCESS = 404 local verification_code = verify() local is_higher_version = verification_code == USE_HIGHER_VERSION if verification_code == USE_ORIGIN_VERSION or is_higher_version or verification_code == USE_CLONING_VERSION then if is_higher_version then gg.alert("Error: The script can only be run on SimCity BuildIt version " .. version_name .. "") gg.setVisible(true)os.exit() end elseif verification_code == USE_UNAUTHORIZED_VERSION then gg.alert("Error: The script can only be run on SimCity BuildIt version " .. version_name .. "")  gg.setVisible(true) os.exit() elseif verification_code == USE_UNAUTHORIZED_PACKAGE then gg.alert("Error: The script can only be run in the SimCity BuildIt app") gg.setVisible(true) os.exit() elseif verification_code == USE_NO_PROCCESS then gg.alert("Error: No process selected") gg.setVisible(true) os.exit() Next_Level() GetResources() else gg.alert("Error: Failed to verify your GameGuardian")  gg.setVisible(true) os.exit() end end 
-
---COUNTER FOR ROOT POINTERS
-boostercounter=39
-omega_counter=10
+ == count_items10
 normal_counter=117
-warcardcounter=24
-warpartscounter=13
-Building_counts=1757
-
---WAR CARDS CONSTANT OFFSET
-offset_warcards64bit =0x50
-offset_warcards32bit =0x2C
-
---WAR BOOSTERS CONSTANT OFFSET
-offset_boosters64bit=0x50
-offset_boosters32bit=0x2C
-
---WAR PARTS OFFSET
-offset_warparts64bit=0x50
-offset_warparts32bit=0x2C
-
---OMEGA PART OFFSET
-offset_omega64bit=0x50
-offset_omega32bit=0x2C 
-
---NORMAL PART PRODUCTION
-offset_normal_parts_64bit=0x50
-offset_normal_parts_32bit=0x2C
-
---SPEED TOKENS
-offset_speed_token_64bit=0x50
-offset_speed_token_32bit=0x2C
-
---RARE PARTS
-offset_rare_parts_64bit=0x50
-offset_rare_parts_32bit=0x2C
-
-
-
  --LEVEL UPGRADE
 Offset_FREEZE_GET_RESOURCES_LEVEL64_ONE=0x60
 Offset_FREEZE_GET_RESOURCES_LEVEL_64_TWO=0x64
@@ -133,35 +21,7 @@ offset_normal_part_checklist32=0x14
 
 --AIRPORT
 offset_airport_64_bit=0x50
-offset_airport_32_bit=0x2C
 
---RESIDENTIAL BUILDINGS
-Offset_residentual_one_64=0x124
-Offset_residentual_one_32=0xC0
-Offset_residentual_two_64=0x124
-Offset_residentual_two_32=0xC0
-Offset_residentual_four_64=0x128
-Offset_residentual_four_32=0xC4
-Offset_residentual_five_64=0x4
-Offset_residentual_five_32=0x4
-
---GOLDEN TICKETS
-offset_golden_tickets_64bit=0x50
-offset_golden_tickets_32bit=0x2C
- 
- --CERTIFICATE
- offset_certificate_64bit=0x50
- offset_certificate_32bit=0x2C
- 
- --BUILDING CHECKER COUNTER
-Buildings_checker_counter_one_64=0x120
-Buildings_checker_counter_one_32=0xBC
-Buildings_checker_counter_two_64=0x120
-Buildings_checker_counter_two_32=0xBC
-specificationx32=0x228
-specificationx64=0x318 
-
- --BUILDINGS
 offset_buildings_64bit=0x50
 offset_buildings_32bit=0x2C
 
@@ -177,10 +37,7 @@ offset_timers_32_2=0x15c
 offset_timers_32_4=0x160
 
   --BUILDING OFFSET 50
-offset_warcard_level_building_reduce_64bit_1 = 0x338
-offset_warcard_level_building_reduce_64bit_2 = 0x340
-offset_warcard_level_building_reduce_64bit_3 = 0x348
-offset_warcard_level_building_reduce_32bit_1 = 0x238
+offset_warcard_level_building_reduce_64bit_1 = 0x338 = 0x238
 offset_warcard_level_building_reduce_32bit_2 = 0x23C
 offset_warcard_level_building_reduce_32bit_3= 0x240
 
